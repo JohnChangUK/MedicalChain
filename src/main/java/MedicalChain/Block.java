@@ -1,5 +1,6 @@
-import java.util.Date;
+package MedicalChain;
 
+import java.util.Date;
 
 public class Block {
 
@@ -9,7 +10,6 @@ public class Block {
     private long timeStamp;
     private int nonce;
 
-    //Block Constructor.
     public Block(String data,String previousHash) {
         this.data = data;
         this.previousHash = previousHash;

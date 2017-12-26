@@ -1,3 +1,5 @@
+package MedicalChain;
+
 import java.security.MessageDigest;
 
 public class Sha256Hash {
