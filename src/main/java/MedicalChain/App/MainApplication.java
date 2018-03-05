@@ -1,6 +1,6 @@
-package MedicalChain;
+package MedicalChain.App;
 
-import org.apache.catalina.core.ApplicationContext;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -8,14 +8,17 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 @SpringBootApplication
 public class MainApplication {
 
+    @Qualifier("patient")
+    private static Patient patient;
+
     public static void main(String[] args) {
 
         SpringApplication.run(MainApplication.class, args);
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-        Patient patient = context.getBean(Patient.class);
-        System.out.println(patient.getGender());
-        System.out.println(patient.getMedicalHistory());
+        AnnotationConfigApplicationContext factory = new AnnotationConfigApplicationContext(Config.class);
+        patient = factory.getBean(Patient.class);
+        patient.history();
+
 
     }
 }

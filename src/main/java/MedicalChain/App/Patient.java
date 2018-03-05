@@ -1,14 +1,21 @@
-package MedicalChain;
+package MedicalChain.App;
 
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 @Component
-@Builder(toBuilder = true)
 public class Patient {
+
+    @Autowired
+    @Qualifier("medHistory")
+    MedHistory medHistory;
+
+    @Autowired
+    @Qualifier("patient2")
+    History history;
 
     private Integer id;
     private String name;
@@ -25,6 +32,12 @@ public class Patient {
         this.age = age;
         this.gender = gender;
         this.medicalHistory = medicalHistory;
+    }
+
+    public void history() {
+        System.out.println("Patient's history inside history() method");
+        medHistory.process();
+        history.patient();
     }
 
     public Integer getId() {

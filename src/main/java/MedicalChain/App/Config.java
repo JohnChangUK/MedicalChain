@@ -1,4 +1,4 @@
-package MedicalChain;
+package MedicalChain.App;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,8 +8,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@ComponentScan(basePackages = "MedicalChain")
+@ComponentScan(basePackages = "MedicalChain.App")
 public class Config {
+
+    private Map<Integer, String> medicalHistory;
+
+    @Bean
+    public Map<Integer, String> medicalHistory() {
+        medicalHistory = new HashMap<>();
+        medicalHistory.put(1, "Patient1 medical History");
+        return medicalHistory;
+    }
 
     @Bean
     public Integer id() {
@@ -29,13 +38,6 @@ public class Config {
     @Bean
     public String gender() {
         return "Male";
-    }
-
-    @Bean
-    public Map<Integer, String> medicalHistory() {
-        Map<Integer, String> medicalHistory = new HashMap<>();
-        medicalHistory.put(1, "James's medical history in a HashMap");
-        return medicalHistory;
     }
 
 }
