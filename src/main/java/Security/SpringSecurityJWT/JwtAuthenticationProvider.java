@@ -22,20 +22,17 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-
     }
 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
         JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
-
         String token = jwtAuthenticationToken.getToken();
-
         JwtUser jwtUser = jwtValidator.validate(token);
 
         if (jwtUser == null) {
-            throw new RuntimeException("JWT is Invalid.")
+            throw new RuntimeException("JWT is Invalid.");
         }
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
@@ -43,7 +40,6 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
         return new JwtUserDetails(jwtUser.getUserName(), jwtUser.getId(), token, grantedAuthorities);
     }
 
-    @Override
     public boolean support(Class<?> aClass) {
         return (JwtAuthenticationToken.class.isAssignableFrom(aClass));
     }

@@ -4,6 +4,7 @@ import Security.SpringSecurityJWT.JwtAuthenticationEntryPoint;
 import Security.SpringSecurityJWT.JwtAuthenticationProvider;
 import Security.SpringSecurityJWT.JwtAuthenticationTokenFilter;
 import Security.SpringSecurityJWT.JwtSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +23,9 @@ import java.util.Collections;
 @Configuration
 public class Config extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Autowired
     private JwtAuthenticationEntryPoint entryPoint;
 
     @Bean
@@ -50,7 +53,6 @@ public class Config extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         http.headers().cacheControl();
     }
 }

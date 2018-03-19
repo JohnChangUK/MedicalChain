@@ -21,69 +21,49 @@ public class JwtUserDetails implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
     public String getUsername() {
-        return null;
+        return userName;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public Collection<? extends GrantedAuthority> getGrantedAuthorities() {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return grantedAuthorities;
     }
 
-    public void setGrantedAuthorities(Collection<? extends GrantedAuthority> grantedAuthorities) {
-        this.grantedAuthorities = grantedAuthorities;
+    @Override
+    public String getPassword() {
+        return null;
     }
 }
