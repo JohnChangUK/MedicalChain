@@ -1,6 +1,10 @@
 management:
   security:
-    enabled: true
+    enabled: false
+
+security:
+  basic:
+    enabled: false
 
 
 spring:
