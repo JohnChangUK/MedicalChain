@@ -22,10 +22,14 @@ public abstract class Message {
         this.handlerRegistry = handlerRegistry;
     }
 
-    public Optional<Tuple2<Class<? extends Message>, Method>> getMessageType(Message message) {
-        for (Class<? extends Message> singleMessage : handlerRegistry.keySet()) {
+    public Optional<Tuple2<Class<? extends Message>, Method>> getMessageType(Message message) throws NoSuchMethodException {
+        Message messager1 = new Messager();
+        Oracle oracle = new Oracle();
+        messager1.handlerRegistry.put(oracle.getClass(), oracle.getClass().getDeclaredMethod("stateOfOracle", String.class));
+
+        for (Class<? extends Message> singleMessage : messager1.handlerRegistry.keySet()) {
             if (Message.class.isInstance(message)) {
-                return Optional.of(new Tuple2<>(singleMessage, handlerRegistry.get(singleMessage)));
+                return Optional.of(new Tuple2<>(singleMessage, messager1.handlerRegistry.get(singleMessage)));
             }
         }
         return Optional.empty();

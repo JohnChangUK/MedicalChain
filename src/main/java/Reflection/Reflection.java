@@ -15,7 +15,7 @@ public class Reflection extends Message {
 
     public Reflection() {}
 
-    public void useReflection(Message message) {
+    public void useReflection() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
 
         Optional<Tuple2<Class<? extends Message>, Method>> handlerOptional = Messager.messagerComponent.getMessageType(message);
 
@@ -23,17 +23,24 @@ public class Reflection extends Message {
             Class<? extends Message> messageType = handlerOptional.get().getFirst();
             Method method = handlerOptional.get().getSecond();
             // TODO If Message type is same as type of Class Message, invoke methods on the target Object
-//            if (method.getDeclaringClass() == this.getClass()) {
-//                try {
-//                    method.invoke(this, )
-//                }
-//            }
+            if (method.getDeclaringClass().getSuperclass() == this.getClass().getSuperclass()) {
+                try {
+                    // Method invoke needs a static method or you need to create a new instance of the Class Type
+                    method.invoke(messageType.newInstance(), "InvokeOnThis");
+                    System.out.println("Got inside try block");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Message messager1 = new Messager();
         Oracle oracle = new Oracle();
+        Reflection reflection = new Reflection();
+
+        messager1.handlerRegistry.put(oracle.getClass(), oracle.getClass().getDeclaredMethod("stateOfOracle", String.class));
 
         Method[] methodArray = messager1.getClass().getDeclaredMethods();
         Method[] methodsFromOracle = oracle.getClass().getDeclaredMethods();
@@ -54,6 +61,9 @@ public class Reflection extends Message {
         for (Method method : methodsFromOracle) {
             method.invoke(oracle, "String being invoked by Java Reflection API");
         }
-    }
+
+        reflection.useReflection();
+
+        }
 
 }
