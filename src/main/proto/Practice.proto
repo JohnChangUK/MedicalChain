@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package Protobuf;
+
+option java_multiple_files = true;
+
+enum Type {
+    ONION = 0;
+    VPN = 1;
+    PROXY = 2;
+}
+
+message Request {
+    string firstname = 1;
+    string lastname = 2;
+    int64 age = 23;
+    Type type = 4;
+    repeated string types = 5;
+    map<string, string> requestResponse = 6;
+}
+
+message Response {
+    string greeting = 1;
+}
+
+service GreetingService {
+    rpc greeting(Request) returns (Response);
+}
